@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Lista de Tarefas Avançada</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div id="app">
+        <h1>Minhas Tarefas</h1>
+        
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="Adicionar nova tarefa...">
+            
+            <label for="taskDate">Data:</label>
+            <input type="date" id="taskDate">
+
+            <label for="taskTime">Hora:</label>
+            <input type="time" id="taskTime">
+            
+            <button id="addTaskBtn">Adicionar</button>
+        </div>
+
+        <ul id="taskList">
+            </ul>
+        
+        <p id="emptyMessage" style="text-align: center; color: #888; font-style: italic;"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
