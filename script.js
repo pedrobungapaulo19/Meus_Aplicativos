@@ -1,32 +1,31 @@
 // 1. Selecionar Elementos do HTML
 const taskInput = document.getElementById('taskInput');
-const taskDate = document.getElementById('taskDate'); // Novo
-const taskTime = document.getElementById('taskTime'); // Novo
+const taskDate = document.getElementById('taskDate');
+const taskTime = document.getElementById('taskTime');
 const addTaskBtn = document.getElementById('addTaskBtn');
 const taskList = document.getElementById('taskList');
-const emptyMessage = document.getElementById('emptyMessage'); // Novo
+const emptyMessage = document.getElementById('emptyMessage');
 
-// 2. FUNÇÕES DE PERSISTÊNCIA
+// Chave de armazenamento (Melhor prática: definir a chave uma vez)
+const STORAGE_KEY = 'tasks'; 
+
+// 2. FUNÇÕES DE PERSISTÊNCIA (Já estão perfeitas para o offline!)
 function getTasks() {
-    // Agora as tarefas são objetos, então o parse é importante
-    const tasks = localStorage.getItem('tasks');
-    // Se não houver nada, retorna uma lista vazia
+    const tasks = localStorage.getItem(STORAGE_KEY);
     return tasks ? JSON.parse(tasks) : [];
 }
 
 function saveTasks(tasks) {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
 // 3. FUNÇÕES DE MANIPULAÇÃO DO DOM E LEMBRETE
-
 function createTaskElement(task, taskIndex) {
     const listItem = document.createElement('li');
     
     // Formatação da data e hora para exibição
     let dateTimeText = '';
     
-    // Verifica se a data e hora foram preenchidas
     if (task.date) {
         // Converte o formato 'AAAA-MM-DD' para 'DD/MM/AAAA'
         const [year, month, day] = task.date.split('-');
@@ -57,14 +56,12 @@ function createTaskElement(task, taskIndex) {
 
 function renderTasks() {
     taskList.innerHTML = ''; 
-    const tasks = getTasks();
+    const tasks = getTasks(); // Puxa dados do localStorage
     
     if (tasks.length === 0) {
-        // Se a lista estiver vazia, mostra a mensagem e oculta a lista.
         emptyMessage.textContent = 'Nenhuma tarefa adicionada. Comece a planejar seu dia!';
         taskList.style.display = 'none';
     } else {
-        // Se houver tarefas, oculta a mensagem e mostra a lista.
         emptyMessage.textContent = '';
         taskList.style.display = 'block';
 
@@ -76,7 +73,6 @@ function renderTasks() {
 }
 
 // 4. FUNÇÕES DE LÓGICA DO APP
-
 function addTask() {
     const content = taskInput.value.trim();
     const date = taskDate.value;
@@ -94,8 +90,8 @@ function addTask() {
     };
 
     const tasks = getTasks();
-    tasks.push(newTask); // Adiciona o objeto da nova tarefa
-    saveTasks(tasks);     
+    tasks.push(newTask); 
+    saveTasks(tasks);     // <--- ESSENCIAL PARA PERSISTIR OFFLINE
 
     // Limpa os campos após adicionar
     taskInput.value = '';
@@ -108,12 +104,12 @@ function addTask() {
 function deleteTask(index) {
     let tasks = getTasks();
     tasks.splice(index, 1);
-    saveTasks(tasks);
+    saveTasks(tasks); // <--- SALVA APÓS EXCLUSÃO
     renderTasks();
 }
 
 
-// 5. EVENT LISTENERS
+// 5. EVENT LISTENERS (Permanecem inalterados)
 addTaskBtn.addEventListener('click', addTask);
 
 taskList.addEventListener('click', function(e) {
@@ -124,5 +120,8 @@ taskList.addEventListener('click', function(e) {
 });
 
 
-// 6. INICIALIZAÇÃO
-renderTasks();
+// 6. INICIALIZAÇÃO MELHORADA (Garante que só carrega após o HTML estar pronto)
+document.addEventListener('DOMContentLoaded', () => {
+    // Carrega as tarefas salvas no localStorage assim que o app abre.
+    renderTasks(); 
+});
