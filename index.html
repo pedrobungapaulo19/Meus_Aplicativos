@@ -1,33 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Lista de Tarefas Avançada</title>
-    <link rel="stylesheet" href="style.css"> 
+  <title>Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <h1>Minhas Tarefas</h1>
-        
-        <div class="input-container">
-            <input type="text" id="taskInput" placeholder="Adicionar nova tarefa...">
-            
-            <label for="taskDate">Data:</label>
-            <input type="date" id="taskDate">
-
-            <label for="taskTime">Hora:</label>
-            <input type="time" id="taskTime">
-            
-            <button id="addTaskBtn">Adicionar</button>
-        </div>
-
-        <ul id="taskList">
-            </ul>
-        
-        <p id="emptyMessage" style="text-align: center; color: #888; font-style: italic;"></p>
-    </div>
-
-    <script src="script.js"></script>
+    <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(() => console.log('Service Worker registrado'))
+      .catch(err => console.error('Erro ao registrar o Service Worker', err));
+  }
+</script>
+  <h1>Gerenciador de Tarefas</h1>
+  <form id="form-tarefa">
+    <input type="text" id="tarefa" placeholder="Digite a tarefa">
+    <input type="datetime-local" id="data-hora">
+    <button id="btn-adicionar">Adicionar</button>
+  </form>
+  <ul id="lista-tarefas"></ul>
+  <script src="script.js"></script>
 </body>
 </html>
