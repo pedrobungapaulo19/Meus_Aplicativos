@@ -1,5 +1,5 @@
 
-const cacheName = 'meu-site-v1';
+const cacheName = 'Gerenciador-de-Tarefas';
 const arquivosParaCache = [
   '/',
   '/index.html',
