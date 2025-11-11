@@ -1,24 +1,35 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Gerenciador de Tarefas</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Lista de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <script>
+     <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then(() => console.log('Service Worker registrado'))
       .catch(err => console.error('Erro ao registrar o Service Worker', err));
   }
 </script>
-  <h1>Gerenciador de Tarefas</h1>
-  <form id="form-tarefa">
-    <input type="text" id="tarefa" placeholder="Digite a tarefa">
-    <input type="datetime-local" id="data-hora">
-    <button id="btn-adicionar">Adicionar</button>
-  </form>
-  <ul id="lista-tarefas"></ul>
-  <script src="script.js"></script>
+
+    <div id="app">
+        <h1>Minha Lista de Tarefas</h1>
+        <div class="input-container">
+            <input type="text" id="taskInput" placeholder="Digite uma tarefa">
+            <label for="taskDate">Data:</label>
+            <input type="date" id="taskDate">
+            <label for="taskTime">Hora:</label>
+            <input type="time" id="taskTime">
+            <button id="addTaskBtn">Adicionar Tarefa</button>
+        </div>
+        <ul id="taskList"></ul>
+        <div id="emptyMessage">Nenhuma tarefa adicionada.</div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
